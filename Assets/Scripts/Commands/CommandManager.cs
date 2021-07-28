@@ -18,14 +18,11 @@ namespace HK.MineTerminal
 
         public CommandManager()
         {
-            this.Add(new Mine());
             this.Add(new Sleep());
             this.Add(new RegisterAlias());
             this.Add(new Help());
             this.Add(new Run());
             this.Add(new Culture());
-            this.Add(new Monitor());
-            this.Add(new Expansion());
         }
 
         public void Add(ICommand command)
@@ -40,7 +37,7 @@ namespace HK.MineTerminal
 
         public void RegisterAlias(string aliasName, string targetCommandData, IInteractor interactor)
         {
-            if(this.Commands.ContainsKey(aliasName))
+            if (this.Commands.ContainsKey(aliasName))
             {
                 interactor.Send($"\"{aliasName}\" already exists.");
                 return;
