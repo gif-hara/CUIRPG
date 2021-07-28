@@ -45,7 +45,12 @@ namespace HK.MineTerminal
             {
                 this.session.Receive(s);
                 this.inputField.text = "";
-                Observable.NextFrame().SubscribeWithState(this, (_, _this) => _this.inputField.ActivateInputField());
+
+                Observable.NextFrame().SubscribeWithState(this, (_, _this) =>
+                {
+                    _this.inputField.ActivateInputField();
+                    _this.inputField.text = "";
+                });
             });
 
             this.owner = this.GetComponent<Window>();
@@ -76,12 +81,12 @@ namespace HK.MineTerminal
         void Update()
         {
             var isFocus = OperatingSystem.CurrentWindow.Value == this.owner;
-            if(isFocus && !this.session.IsInteractable.Value && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.C))
+            if (isFocus && !this.session.IsInteractable.Value && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.C))
             {
                 this.session.Broker.Publish(IInteractorEvents.Aborted.Get());
             }
 
-            if(this.session.HistoryUpdateCount != this.currentUpdateCount)
+            if (this.session.HistoryUpdateCount != this.currentUpdateCount)
             {
                 this.historyBuilder.Clear();
                 var histories = this.session.Histories.ToArray();
@@ -107,7 +112,7 @@ namespace HK.MineTerminal
                 this.history.textComponent.ForceMeshUpdate();
 
                 // 一旦履歴をアクティブにして最後尾の行を表示する
-                if(isFocus)
+                if (isFocus)
                 {
                     this.history.ActivateInputField();
                     this.history.MoveToEndOfLine(false, true);
@@ -118,7 +123,7 @@ namespace HK.MineTerminal
 
                 this.currentUpdateCount = this.session.HistoryUpdateCount;
 
-                if(isFocus)
+                if (isFocus)
                 {
                     Observable.NextFrame().SubscribeWithState(this, (_, _this) => _this.inputField.ActivateInputField());
                 }
@@ -134,7 +139,7 @@ namespace HK.MineTerminal
         {
             var rootRect = this.root.rect;
             var sizeDelta = this.historyTransform.sizeDelta;
-            if(this.history.text.Length <= 0)
+            if (this.history.text.Length <= 0)
             {
                 sizeDelta.y = 0.0f;
             }
@@ -155,9 +160,9 @@ namespace HK.MineTerminal
         private static int GetNewLineCount(string value)
         {
             var result = 0;
-            foreach(var s in value)
+            foreach (var s in value)
             {
-                if(s == '\n')
+                if (s == '\n')
                 {
                     result++;
                 }

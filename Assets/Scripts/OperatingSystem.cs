@@ -18,7 +18,7 @@ namespace HK.MineTerminal
         [SerializeField]
         private StringAssetHolder localizedMessages = default;
         public StringAssetHolder LocalizedMessages => this.localizedMessages;
-        
+
         public static OperatingSystem Instance { get; private set; }
 
         /// <summary>
@@ -57,20 +57,23 @@ namespace HK.MineTerminal
             Instance = this;
 
             CurrentWindow.Value = this.desktop;
+        }
 
+        void Start()
+        {
             var session = new Session();
             this.AddTask(session);
         }
 
         void Update()
         {
-            if(Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.T))
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.T))
             {
                 var session = new Session();
                 this.AddTask(session);
             }
 
-            foreach(var t in this.tasks)
+            foreach (var t in this.tasks)
             {
                 t.Update();
             }

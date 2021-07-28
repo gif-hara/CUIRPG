@@ -28,8 +28,6 @@ namespace HK.MineTerminal
                     terminal.Initialize(session);
                 })
                 .AddTo(this);
-
-            Broker.Global.Publish(TaskEvents.Enter.Get(new Session()));
         }
     }
 }
