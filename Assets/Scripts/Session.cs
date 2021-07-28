@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using HK.Framework.EventSystems;
-using HK.MineTerminal.Events;
+using HK.CUIRPG.Events;
 using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// <see cref="OperatingSystem"/>を操作するクラス

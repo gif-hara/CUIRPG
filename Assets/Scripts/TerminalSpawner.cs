@@ -1,10 +1,10 @@
 ﻿using HK.Framework.EventSystems;
-using HK.MineTerminal.Events;
+using HK.CUIRPG.Events;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UniRx;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// <see cref="TerminalController"/>を生成するクラス

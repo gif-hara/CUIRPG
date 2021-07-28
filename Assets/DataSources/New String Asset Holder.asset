@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: New String Asset Holder
   m_EditorClassIdentifier: 
   commandHelpBundle:
-    list: []
-  commandDoesNotExist:
-    target: {fileID: 0}
-    value: 
-    guid: 
+    list:
+    - commandName: help
+      description: "help\u306E\u8AAC\u660E"
+    - commandName: sleep
+      description: "sleep\u306E\u8AAC\u660E"
+    - commandName: alias
+      description: "alias\u306E\u8AAC\u660E"
+    - commandName: run
+      description: "run\u306E\u8AAC\u660E"
+  commandDoesNotExist: "{0}\u3068\u3044\u3046\u30B3\u30DE\u30F3\u30C9\u3042\u308A\u307E\u305B\u3093"

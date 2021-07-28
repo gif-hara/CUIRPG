@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// 対話を行うインターフェイス

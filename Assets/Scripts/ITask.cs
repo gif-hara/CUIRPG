@@ -3,7 +3,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// 様々な処理を行うタスクのインターフェイス

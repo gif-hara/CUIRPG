@@ -1,11 +1,11 @@
 ﻿using System;
 using HK.Framework.EventSystems;
-using HK.MineTerminal.Events;
+using HK.CUIRPG.Events;
 using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// <see cref="ITask"/>に関する拡張関数

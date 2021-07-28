@@ -1,9 +1,9 @@
-﻿using HK.MineTerminal.Events;
+﻿using HK.CUIRPG.Events;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// 

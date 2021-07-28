@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace HK.MineTerminal.Events
+namespace HK.CUIRPG.Events
 {
     /// <summary>
     /// <see cref="IInteractor"/>に関するイベント

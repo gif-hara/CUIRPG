@@ -2,18 +2,19 @@
 using HK.Framework.Text;
 using System;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// <see cref="StringAsset"/>を保持するクラス
     /// </summary>
-    [CreateAssetMenu(menuName = "MineTerminal/StringAssetHolder")]
+    [CreateAssetMenu(menuName = "CUIRPG/StringAssetHolder")]
     public sealed class StringAssetHolder : ScriptableObject
     {
         public CommandHelpBundle commandHelpBundle = default;
 
-        public StringAsset.Finder commandDoesNotExist = default;
+        public string commandDoesNotExist = default;
 
         [Serializable]
         public class CommandHelpBundle
@@ -25,14 +26,16 @@ namespace HK.MineTerminal
 
             public CommandHelp Get(string commandName)
             {
-                if(this.dictionary == null)
+                if (this.dictionary == null)
                 {
                     this.dictionary = new Dictionary<string, CommandHelp>();
-                    foreach(var x in this.list)
+                    foreach (var x in this.list)
                     {
                         this.dictionary.Add(x.CommandName, x);
                     }
                 }
+
+                Assert.IsTrue(this.dictionary.ContainsKey(commandName), $"{commandName}は存在しません");
 
                 return this.dictionary[commandName];
             }
@@ -46,8 +49,8 @@ namespace HK.MineTerminal
             public string CommandName => this.commandName;
 
             [SerializeField]
-            private StringAsset.Finder message = default;
-            public StringAsset.Finder Message => this.message;
+            private string description = default;
+            public string Description => this.description;
         }
     }
 }

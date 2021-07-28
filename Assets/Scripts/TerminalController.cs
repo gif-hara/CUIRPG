@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UniRx;
-using HK.MineTerminal.Events;
+using HK.CUIRPG.Events;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// ターミナルを制御するクラス

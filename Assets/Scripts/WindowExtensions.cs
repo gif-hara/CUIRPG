@@ -1,8 +1,8 @@
-﻿using HK.MineTerminal.Events;
+﻿using HK.CUIRPG.Events;
 using UnityEngine;
 using UniRx;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// <see cref="Window"/>に関する拡張機能

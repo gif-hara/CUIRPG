@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using HK.Framework.EventSystems;
-using HK.MineTerminal.Events;
+using HK.CUIRPG.Events;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UniRx;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// ゲームの中核を担うクラス

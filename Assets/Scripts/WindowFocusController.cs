@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UniRx;
 using UnityEngine.UI;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// <see cref="Window"/>のフォーカスを制御するクラス

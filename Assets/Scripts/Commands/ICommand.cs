@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using UniRx;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// コマンドのインターフェイス
@@ -9,7 +11,7 @@ namespace HK.MineTerminal
     {
         string Name { get; }
 
-        IEnumerator Invoke(CommandData data, IInteractor interactor);
+        IObservable<Unit> Invoke(CommandData data, IInteractor interactor);
 
         void SendHelp(IInteractor interactor);
     }

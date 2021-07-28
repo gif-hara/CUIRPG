@@ -1,8 +1,9 @@
 ﻿using System.Collections;
+using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// エイリアスを実行する<see cref="ICommand"/>
@@ -21,15 +22,15 @@ namespace HK.MineTerminal
             this.commandData = commandData;
         }
 
-        public IEnumerator Invoke(CommandData data, IInteractor interactor)
-        {
-            yield return OperatingSystem.Instance.CommandManager.InvokeCoroutine(this.commandData, interactor);
-        }
-
         public void SendHelp(IInteractor interactor)
         {
             var help = OperatingSystem.Instance.LocalizedMessages.commandHelpBundle.Get(this.Name);
-            interactor.Send(help.Message.Format(this.aliasName, this.commandData));
+            interactor.Send(help.Description.Format(this.aliasName, this.commandData));
+        }
+
+        public System.IObservable<Unit> Invoke(CommandData data, IInteractor interactor)
+        {
+            return OperatingSystem.Instance.CommandManager.InvokeCoroutine(this.commandData, interactor);
         }
     }
 }

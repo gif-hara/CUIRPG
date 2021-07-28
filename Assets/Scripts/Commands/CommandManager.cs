@@ -4,10 +4,10 @@ using UniRx;
 using System.Linq;
 using System;
 using UnityEngine;
-using HK.MineTerminal.Events;
+using HK.CUIRPG.Events;
 using System.Threading;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// コマンドを管理するクラス
@@ -22,7 +22,6 @@ namespace HK.MineTerminal
             this.Add(new RegisterAlias());
             this.Add(new Help());
             this.Add(new Run());
-            this.Add(new Culture());
         }
 
         public void Add(ICommand command)
@@ -50,42 +49,48 @@ namespace HK.MineTerminal
 
         public void Invoke(string data, IInteractor interactor)
         {
-            var coroutine = OperatingSystem.Instance.StartCoroutine(this.InvokeCoroutine(data, interactor));
+            var disposable = this.InvokeCoroutine(data, interactor)
+                .Subscribe();
             interactor.Broker.Receive<IInteractorEvents.Aborted>()
                 .TakeUntil(interactor.IsInteractable.Where(x => x))
                 .Take(1)
                 .Subscribe(_ =>
                 {
-                    OperatingSystem.Instance.StopCoroutine(coroutine);
+                    disposable.Dispose();
                     interactor.Abort();
                 });
         }
 
-        public IEnumerator InvokeCoroutine(string data, IInteractor interactor)
+        public IObservable<Unit> InvokeCoroutine(string data, IInteractor interactor)
         {
-            if (string.IsNullOrEmpty(data))
+            return Observable.Defer(() =>
             {
-                yield break;
-            }
+                if (string.IsNullOrEmpty(data))
+                {
+                    return Observable.ReturnUnit();
+                }
 
-            var commandData = new CommandData(data);
+                var commandData = new CommandData(data);
 
-            if (!commandData.IsValid)
-            {
-                yield break;
-            }
+                if (!commandData.IsValid)
+                {
+                    return Observable.ReturnUnit();
+                }
 
-            if (!this.Commands.ContainsKey(commandData.Name))
-            {
-                interactor.Send($"\"{commandData.Name}\" did not exist.");
-                yield break;
-            }
+                if (!this.Commands.ContainsKey(commandData.Name))
+                {
+                    interactor.Send($"\"{commandData.Name}\" did not exist.");
+                    return Observable.ReturnUnit();
+                }
 
-            interactor.Busy();
+                interactor.Busy();
 
-            yield return this.Commands[commandData.Name].Invoke(commandData, interactor);
-
-            interactor.Accept();
+                return this.Commands[commandData.Name].Invoke(commandData, interactor)
+                .Do(_ =>
+                {
+                    interactor.Accept();
+                });
+            });
         }
     }
 }

@@ -2,7 +2,7 @@
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
-namespace HK.MineTerminal
+namespace HK.CUIRPG
 {
     /// <summary>
     /// 
