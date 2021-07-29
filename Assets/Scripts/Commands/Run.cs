@@ -21,7 +21,7 @@ namespace HK.CUIRPG
             interactor.Send(help.Description.Format(this.Name));
         }
 
-        public System.IObservable<Unit> Invoke(CommandData data, IInteractor interactor)
+        public System.IObservable<Unit> InvokeAsObservable(CommandData data, IInteractor interactor)
         {
             return Observable.Defer(() =>
             {
@@ -45,7 +45,7 @@ namespace HK.CUIRPG
                 }
 
                 var stream = Observable.Interval(TimeSpan.FromSeconds(sleepSeconds))
-                    .SelectMany(_ => OperatingSystem.Instance.CommandManager.InvokeCoroutine(targetCommandData, interactor));
+                    .SelectMany(_ => OperatingSystem.Instance.CommandManager.InvokeAsObservable(targetCommandData, interactor));
 
                 if (loopCount > 0)
                 {

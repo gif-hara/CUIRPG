@@ -18,7 +18,7 @@ namespace HK.CUIRPG
             interactor.Send(help.Description.Format(this.Name));
         }
 
-        public System.IObservable<Unit> Invoke(CommandData data, IInteractor interactor)
+        public System.IObservable<Unit> InvokeAsObservable(CommandData data, IInteractor interactor)
         {
             return Observable.Defer(() =>
             {

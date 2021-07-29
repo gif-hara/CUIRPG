@@ -11,7 +11,7 @@ namespace HK.CUIRPG
     {
         string Name { get; }
 
-        IObservable<Unit> Invoke(CommandData data, IInteractor interactor);
+        IObservable<Unit> InvokeAsObservable(CommandData data, IInteractor interactor);
 
         void SendHelp(IInteractor interactor);
     }

@@ -24,7 +24,7 @@ namespace HK.CUIRPG
             interactor.Send(help.Description);
         }
 
-        public System.IObservable<Unit> Invoke(CommandData data, IInteractor interactor)
+        public System.IObservable<Unit> InvokeAsObservable(CommandData data, IInteractor interactor)
         {
             return Observable.Create<Unit>(observer =>
             {

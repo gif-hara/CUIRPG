@@ -51,7 +51,7 @@ namespace HK.CUIRPG
 
         public void Invoke(string data, IInteractor interactor)
         {
-            var disposable = this.InvokeCoroutine(data, interactor)
+            var disposable = this.InvokeAsObservable(data, interactor)
                 .Subscribe();
             interactor.Broker.Receive<IInteractorEvents.Aborted>()
                 .TakeUntil(interactor.IsInteractable.Where(x => x))
@@ -63,7 +63,7 @@ namespace HK.CUIRPG
                 });
         }
 
-        public IObservable<Unit> InvokeCoroutine(string data, IInteractor interactor)
+        public IObservable<Unit> InvokeAsObservable(string data, IInteractor interactor)
         {
             return Observable.Defer(() =>
             {
@@ -87,7 +87,7 @@ namespace HK.CUIRPG
 
                 interactor.Busy();
 
-                return this.Commands[commandData.Name].Invoke(commandData, interactor)
+                return this.Commands[commandData.Name].InvokeAsObservable(commandData, interactor)
                 .DoOnCompleted(() =>
                 {
                     interactor.Accept();
