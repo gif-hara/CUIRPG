@@ -23,6 +23,7 @@ namespace HK.CUIRPG
             this.Add(new Help());
             this.Add(new Run());
             this.Add(new Login());
+            this.Add(new TitleData());
         }
 
         public void Add(ICommand command)
