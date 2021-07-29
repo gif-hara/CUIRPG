@@ -24,6 +24,7 @@ namespace HK.CUIRPG
             this.Add(new Run());
             this.Add(new Login());
             this.Add(new TitleData());
+            this.Add(new Search());
         }
 
         public void Add(ICommand command)
