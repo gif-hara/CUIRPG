@@ -33,7 +33,7 @@ namespace HK.CUIRPG
         public override void Enter()
         {
             base.Enter();
-            this.Send($"Login: {DateTime.Now.ToString()}");
+            this.Receive("login");
         }
 
         public override void Exit()
