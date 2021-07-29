@@ -5,8 +5,9 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System.Linq;
+using System;
 
-namespace HK.CUIRPG
+namespace HK.CUIRPG.Commands
 {
     /// <summary>
     /// タイトルデータに関するする<see cref="ICommand"/>
@@ -46,7 +47,7 @@ namespace HK.CUIRPG
                     error =>
                     {
                         interactor.Send($"{error.ErrorMessage}");
-                        observer.OnError(new System.Exception(error.ErrorMessage));
+                        observer.OnError(new Exception(error.GenerateErrorReport()));
                     });
 
                 return Disposable.Empty;

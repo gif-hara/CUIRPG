@@ -4,7 +4,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace HK.CUIRPG
+namespace HK.CUIRPG.Commands
 {
     /// <summary>
     /// エイリアスを登録する<see cref="ICommand"/>

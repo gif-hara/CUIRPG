@@ -6,7 +6,7 @@ using UniRx;
 using System;
 using UniRx.Diagnostics;
 
-namespace HK.CUIRPG
+namespace HK.CUIRPG.Commands
 {
     /// <summary>
     /// ループしてコマンドを実行する<see cref="ICommand"/>

@@ -3,7 +3,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace HK.CUIRPG
+namespace HK.CUIRPG.Commands
 {
     /// <summary>
     /// エイリアスを実行する<see cref="ICommand"/>

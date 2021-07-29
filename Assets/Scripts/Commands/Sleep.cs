@@ -3,7 +3,7 @@ using System.Collections;
 using UniRx;
 using UnityEngine;
 
-namespace HK.CUIRPG
+namespace HK.CUIRPG.Commands
 {
     /// <summary>
     /// 指定された時間だけスリープする<see cref="ICommand"/>

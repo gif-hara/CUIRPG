@@ -4,6 +4,7 @@ using HK.CUIRPG.Events;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UniRx;
+using HK.CUIRPG.Commands;
 
 namespace HK.CUIRPG
 {

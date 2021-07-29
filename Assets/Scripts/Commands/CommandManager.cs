@@ -7,7 +7,7 @@ using UnityEngine;
 using HK.CUIRPG.Events;
 using System.Threading;
 
-namespace HK.CUIRPG
+namespace HK.CUIRPG.Commands
 {
     /// <summary>
     /// コマンドを管理するクラス

@@ -6,7 +6,7 @@ using PlayFab.ClientModels;
 using UniRx;
 using UnityEngine;
 
-namespace HK.CUIRPG
+namespace HK.CUIRPG.Commands
 {
     /// <summary>
     /// アイテムを探す<see cref="ICommand"/>

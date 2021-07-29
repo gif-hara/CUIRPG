@@ -3,7 +3,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace HK.CUIRPG
+namespace HK.CUIRPG.Commands
 {
     /// <summary>
     /// 全てのコマンドのヘルプを閲覧できる<see cref="ICommand"/>

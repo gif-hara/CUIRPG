@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using PlayFab;
 using PlayFab.ClientModels;
 using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace HK.CUIRPG
+namespace HK.CUIRPG.Commands
 {
     /// <summary>
     /// ゲームにログインする<see cref="ICommand"/>
@@ -31,20 +32,30 @@ namespace HK.CUIRPG
                 var request = new LoginWithCustomIDRequest
                 {
                     CustomId = "GettingStartedGuide",
-                    CreateAccount = true
+                    CreateAccount = true,
+                    InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+                    {
+                        GetTitleData = true,
+                        GetUserData = true,
+                    }
                 };
                 PlayFabClientAPI.LoginWithCustomID(
                     request,
                     result =>
                     {
                         interactor.Send($"Login! {result.PlayFabId}");
+                        foreach (var i in result.InfoResultPayload.TitleData)
+                        {
+                            interactor.Send($"{i.Key}:{i.Value}");
+                        }
+
                         observer.OnNext(Unit.Default);
                         observer.OnCompleted();
                     },
                     error =>
                     {
                         interactor.Send("Login Failed...");
-                        observer.OnError(new System.Exception(error.ErrorMessage));
+                        observer.OnError(new Exception(error.GenerateErrorReport()));
                     });
 
                 return Disposable.Empty;

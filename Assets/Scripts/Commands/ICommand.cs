@@ -2,7 +2,7 @@
 using System.Collections;
 using UniRx;
 
-namespace HK.CUIRPG
+namespace HK.CUIRPG.Commands
 {
     /// <summary>
     /// コマンドのインターフェイス
