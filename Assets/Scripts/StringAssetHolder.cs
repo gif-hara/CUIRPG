@@ -14,6 +14,7 @@ namespace HK.CUIRPG
     {
         public CommandHelpBundle commandHelpBundle = default;
 
+        [Multiline]
         public string commandDoesNotExist = default;
 
         [Serializable]
@@ -48,7 +49,7 @@ namespace HK.CUIRPG
             private string commandName = default;
             public string CommandName => this.commandName;
 
-            [SerializeField]
+            [SerializeField, Multiline]
             private string description = default;
             public string Description => this.description;
         }

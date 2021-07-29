@@ -46,7 +46,7 @@ namespace HK.CUIRPG
             this.Histories.Enqueue(message);
             this.HistoryUpdateCount++;
 
-            if(this.Histories.Count > HistoryLimit)
+            if (this.Histories.Count > HistoryLimit)
             {
                 this.Histories.Dequeue();
             }
@@ -60,7 +60,7 @@ namespace HK.CUIRPG
         public void Receive(string message)
         {
             this.EnqueueHistory(message);
-            if(!this.isInteractable.Value)
+            if (!this.isInteractable.Value)
             {
                 this.buffer.Enqueue(message);
             }
@@ -75,7 +75,7 @@ namespace HK.CUIRPG
         {
             this.busyCount--;
             Assert.IsTrue(this.busyCount >= 0);
-            if(this.busyCount <= 0)
+            if (this.busyCount <= 0)
             {
                 this.isInteractable.Value = true;
                 if (this.buffer.Count > 0)

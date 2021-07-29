@@ -86,7 +86,7 @@ namespace HK.CUIRPG
                 interactor.Busy();
 
                 return this.Commands[commandData.Name].Invoke(commandData, interactor)
-                .Do(_ =>
+                .DoOnCompleted(() =>
                 {
                     interactor.Accept();
                 });

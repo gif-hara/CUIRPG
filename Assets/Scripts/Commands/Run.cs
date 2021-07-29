@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UniRx;
 using System;
+using UniRx.Diagnostics;
 
 namespace HK.CUIRPG
 {
@@ -43,13 +44,12 @@ namespace HK.CUIRPG
                     sleepSeconds = 0.0f;
                 }
 
-                var stream = Observable.EveryUpdate()
+                var stream = Observable.Interval(TimeSpan.FromSeconds(sleepSeconds))
                     .SelectMany(_ => OperatingSystem.Instance.CommandManager.InvokeCoroutine(targetCommandData, interactor));
 
-                if (sleepSeconds > 0.0f)
+                if (loopCount > 0)
                 {
-                    stream = stream
-                    .SelectMany(_ => Observable.Timer(TimeSpan.FromSeconds(sleepSeconds)).AsUnitObservable());
+                    stream = stream.Take(loopCount);
                 }
 
                 return stream;

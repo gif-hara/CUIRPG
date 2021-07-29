@@ -15,11 +15,15 @@ MonoBehaviour:
   commandHelpBundle:
     list:
     - commandName: help
-      description: "help\u306E\u8AAC\u660E"
+      description: "help \u306E\u8AAC\u660E\n    \u30B3\u30DE\u30F3\u30C9\u306E\u30D8\u30EB\u30D7\u3092\u8868\u793A\u3057\u307E\u3059\n"
     - commandName: sleep
-      description: "sleep\u306E\u8AAC\u660E"
+      description: "sleep \u306E\u8AAC\u660E\n    \u6307\u5B9A\u3057\u305F\u79D2\u6570\u3060\u3051\u30BB\u30C3\u30B7\u30E7\u30F3\u3092\u30B9\u30EA\u30FC\u30D7\u3055\u305B\u307E\u3059\n\u30AA\u30D7\u30B7\u30E7\u30F3\n  
+        -s    \u30ED\u30B0\u3092\u51FA\u529B\u3057\u306A\u3044\u3067\u30B9\u30EA\u30FC\u30D7\u3057\u307E\u3059\n\u4F7F\u3044\u65B9\n  
+        sleep 3\n   sleep 1.5\n"
     - commandName: alias
-      description: "alias\u306E\u8AAC\u660E"
+      description: "alias \u306E\u8AAC\u660E\n    \u6307\u5B9A\u3057\u305F\u30B3\u30DE\u30F3\u30C9\u306E\u30A8\u30A4\u30EA\u30A2\u30B9\u3092\u4F5C\u6210\u3057\u307E\u3059\n\u4F7F\u3044\u65B9\n  
+        {0} m mine\n   {0} s3 \"sleep 3\"\n"
     - commandName: run
-      description: "run\u306E\u8AAC\u660E"
+      description: "run \u306E\u8AAC\u660E\n    \u6307\u5B9A\u3057\u305F\u30B3\u30DE\u30F3\u30C9\u3092\u30EB\u30FC\u30D7\u3067\u5B9F\u884C\u3057\u307E\u3059\n\u4F7F\u3044\u65B9\n  
+        {0} mine\n   {0} \"sleep 3\"\n"
   commandDoesNotExist: "{0}\u3068\u3044\u3046\u30B3\u30DE\u30F3\u30C9\u3042\u308A\u307E\u305B\u3093"
