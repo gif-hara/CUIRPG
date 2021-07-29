@@ -22,6 +22,7 @@ namespace HK.CUIRPG
             this.Add(new RegisterAlias());
             this.Add(new Help());
             this.Add(new Run());
+            this.Add(new Login());
         }
 
         public void Add(ICommand command)
