@@ -8,7 +8,7 @@ namespace HK.CUIRPG.Database
     /// アイテムのデータベース
     /// </summary>
     [Serializable]
-    public sealed class Item
+    public sealed class TitleItem
     {
         public int id;
 

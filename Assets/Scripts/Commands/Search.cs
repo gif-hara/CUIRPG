@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using HK.CUIRPG.Database;
 using PlayFab;
 using PlayFab.ClientModels;
 using UniRx;
@@ -27,12 +28,16 @@ namespace HK.CUIRPG.Commands
             {
                 interactor.Send("Search...");
 
+                var userData = UserData.Instance;
+                var items = userData.UserItems;
+                items.Add(new UserItem
+                {
+                    titleItemId = Database.TitleData.Instance.Items[0].id
+                });
+
                 var request = new UpdateUserDataRequest
                 {
-                    Data = new Dictionary<string, string>()
-                    {
-                        { "Hoge", "Foo2"}
-                    }
+                    Data = userData.ToRequest()
                 };
                 PlayFabClientAPI.UpdateUserData(
                     request,

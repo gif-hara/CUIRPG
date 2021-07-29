@@ -24,13 +24,13 @@ namespace HK.CUIRPG.Database
         }
         private static TitleData m_Instance;
 
-        public IReadOnlyList<Item> Items => m_Items;
+        public IReadOnlyList<TitleItem> Items => m_Items;
 
-        private List<Item> m_Items = new List<Item>();
+        private List<TitleItem> m_Items = new List<TitleItem>();
 
         public void Setup(Dictionary<string, string> data)
         {
-            m_Items = PlayFabSimpleJson.DeserializeObject<List<Item>>(data["Items"]);
+            m_Items = PlayFabSimpleJson.DeserializeObject<List<TitleItem>>(data["Items"]);
         }
     }
 }

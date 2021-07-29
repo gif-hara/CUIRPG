@@ -45,6 +45,7 @@ namespace HK.CUIRPG.Commands
                     {
                         interactor.Send($"Login! {result.PlayFabId}");
                         Database.TitleData.Instance.Setup(result.InfoResultPayload.TitleData);
+                        Database.UserData.Instance.Setup(result.InfoResultPayload.UserData);
 
                         observer.OnNext(Unit.Default);
                         observer.OnCompleted();
