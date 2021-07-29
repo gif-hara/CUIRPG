@@ -64,3 +64,5 @@ crashlytics-build.properties
 # Plugins
 *Assets/Plugins/UniRx*
 *Assets/PlayFabSDK*
+*Assets/PlayFabEditorExtensions*
+
