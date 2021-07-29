@@ -1,0 +1,12 @@
+using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace HK.CUIRPG
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public sealed class #SCRIPTNAME# : MonoBehaviour
+    {
+    }
+}
