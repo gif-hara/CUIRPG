@@ -44,10 +44,7 @@ namespace HK.CUIRPG.Commands
                     result =>
                     {
                         interactor.Send($"Login! {result.PlayFabId}");
-                        foreach (var i in result.InfoResultPayload.TitleData)
-                        {
-                            interactor.Send($"{i.Key}:{i.Value}");
-                        }
+                        Database.TitleData.Instance.Setup(result.InfoResultPayload.TitleData);
 
                         observer.OnNext(Unit.Default);
                         observer.OnCompleted();
