@@ -28,6 +28,9 @@ namespace HK.CUIRPG.Database
         }
         private static UserData m_Instance;
 
+        public IObservable<Unit> SetuppedAsObservable() => m_Setupped;
+        private Subject<Unit> m_Setupped = new Subject<Unit>();
+
         public List<UserItem> UserItems
         {
             get;
@@ -44,6 +47,8 @@ namespace HK.CUIRPG.Database
         {
             UserItems = Setup<List<UserItem>>(Key.Items, data);
             UserAliases = Setup<List<UserAlias>>(Key.Aliases, data);
+
+            m_Setupped.OnNext(Unit.Default);
         }
 
         private T Setup<T>(string key, Dictionary<string, UserDataRecord> data) where T : new()

@@ -16,7 +16,7 @@ namespace HK.CUIRPG.Commands
     {
         public readonly Dictionary<string, ICommand> Commands = new Dictionary<string, ICommand>();
 
-        public IObservable<RegisteredAliasCommand> OnRegisteredAliasCommandAsObServable => m_OnRegisteredAliasCommand;
+        public IObservable<RegisteredAliasCommand> OnRegisteredAliasCommandAsObservable() => m_OnRegisteredAliasCommand;
         private Subject<RegisteredAliasCommand> m_OnRegisteredAliasCommand = new Subject<RegisteredAliasCommand>();
 
         public class RegisteredAliasCommand

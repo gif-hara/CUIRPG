@@ -37,7 +37,7 @@ namespace HK.CUIRPG
 
             CurrentWindow.Value = this.desktop;
 
-            CommandManager.OnRegisteredAliasCommandAsObServable
+            CommandManager.OnRegisteredAliasCommandAsObservable()
             .Subscribe(x =>
             {
                 var userData = UserData.Instance;
@@ -49,6 +49,14 @@ namespace HK.CUIRPG
 
                 userData.SendUpdateUserDataRequestAsObservable()
                 .Subscribe();
+            })
+            .AddTo(m_Disposable);
+
+            var userData = UserData.Instance;
+            userData.SetuppedAsObservable()
+            .Subscribe(_ =>
+            {
+                CommandManager.SetupAlias(userData.UserAliases);
             })
             .AddTo(m_Disposable);
         }
