@@ -25,7 +25,7 @@ namespace HK.CUIRPG.Commands
             this.Add(new Login());
             this.Add(new TitleData());
             this.Add(new Search());
-            this.Add(new UserCommands());
+            this.Add(new InventoryCommands());
         }
 
         public void Add(ICommand command)

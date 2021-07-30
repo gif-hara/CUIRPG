@@ -7,11 +7,11 @@ using UnityEngine.Assertions;
 namespace HK.CUIRPG.Commands
 {
     /// <summary>
-    /// ユーザーに関する<see cref="ICommand"/>
+    /// インベントリに関する<see cref="ICommand"/>
     /// </summary>
-    public sealed class UserCommands : ICommand
+    public sealed class InventoryCommands : ICommand
     {
-        public string Name => "user";
+        public string Name => "inventory";
 
         public void SendHelp(IInteractor interactor)
         {
@@ -23,19 +23,10 @@ namespace HK.CUIRPG.Commands
         {
             return Observable.Defer(() =>
             {
-                if (data.Options.Count <= 0)
-                {
-                    SendHelp(interactor);
-                    return Observable.ReturnUnit();
-                }
-
                 var userData = UserData.Instance;
-                if (data.ContainsOption("-i"))
+                for (var i = 0; i < userData.UserItems.Count; i++)
                 {
-                    for (var i = 0; i < userData.UserItems.Count; i++)
-                    {
-                        interactor.Send($"[{i}] {userData.UserItems[i].ToString()}");
-                    }
+                    interactor.Send($"[{i}] {userData.UserItems[i]}");
                 }
 
                 return Observable.ReturnUnit();
