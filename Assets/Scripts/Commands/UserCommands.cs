@@ -1,4 +1,5 @@
 using System;
+using HK.CUIRPG.Database;
 using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -14,12 +15,31 @@ namespace HK.CUIRPG.Commands
 
         public void SendHelp(IInteractor interactor)
         {
-            throw new NotImplementedException();
+            var help = OperatingSystem.Instance.LocalizedMessages.commandHelpBundle.Get(this.Name);
+            interactor.Send(help.Description.Format(this.Name));
         }
 
         public IObservable<Unit> InvokeAsObservable(CommandData data, IInteractor interactor)
         {
-            throw new NotImplementedException();
+            return Observable.Defer(() =>
+            {
+                if (data.Options.Count <= 0)
+                {
+                    SendHelp(interactor);
+                    return Observable.ReturnUnit();
+                }
+
+                var userData = UserData.Instance;
+                if (data.ContainsOption("-i"))
+                {
+                    for (var i = 0; i < userData.UserItems.Count; i++)
+                    {
+                        interactor.Send($"[{i}] {userData.UserItems[i].ToString()}");
+                    }
+                }
+
+                return Observable.ReturnUnit();
+            });
         }
     }
 }

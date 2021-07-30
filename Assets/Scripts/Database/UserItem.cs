@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -9,5 +10,11 @@ namespace HK.CUIRPG.Database
     public sealed class UserItem
     {
         public int titleItemId;
+
+        public override string ToString()
+        {
+            var titleItem = TitleData.Instance.Items.FirstOrDefault(x => x.id == titleItemId);
+            return $"{titleItem.name}";
+        }
     }
 }
