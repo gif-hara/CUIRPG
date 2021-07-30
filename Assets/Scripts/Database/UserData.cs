@@ -31,15 +31,27 @@ namespace HK.CUIRPG.Database
             private set;
         }
 
+        public List<UserAlias> UserAliases
+        {
+            get;
+            private set;
+        }
+
         public void Setup(Dictionary<string, UserDataRecord> data)
         {
-            if (data.ContainsKey(Key.Items))
+            UserItems = Setup<List<UserItem>>(Key.Items, data);
+            UserAliases = Setup<List<UserAlias>>(Key.Aliases, data);
+        }
+
+        private T Setup<T>(string key, Dictionary<string, UserDataRecord> data) where T : new()
+        {
+            if (data.ContainsKey(key))
             {
-                UserItems = PlayFabSimpleJson.DeserializeObject<List<UserItem>>(data[Key.Items].Value);
+                return PlayFabSimpleJson.DeserializeObject<T>(data[key].Value);
             }
             else
             {
-                UserItems = new List<UserItem>();
+                return new T();
             }
         }
 
@@ -54,6 +66,8 @@ namespace HK.CUIRPG.Database
         private static class Key
         {
             public static readonly string Items = "Items";
+
+            public static readonly string Aliases = "Aliases";
         }
     }
 }

@@ -38,7 +38,12 @@ namespace HK.CUIRPG.Commands
             this.Commands.Add(name, command);
         }
 
-        public void RegisterAlias(string aliasName, string targetCommandData, IInteractor interactor)
+        public void RegisterAlias(
+            string aliasName,
+            string targetCommandData,
+            IInteractor interactor,
+            Action onSuccess = null
+            )
         {
             if (this.Commands.ContainsKey(aliasName))
             {
@@ -48,7 +53,24 @@ namespace HK.CUIRPG.Commands
 
             var alias = new Alias(aliasName, targetCommandData);
             this.Add(alias, aliasName);
+            onSuccess?.Invoke();
             interactor.Send($"success register alias!");
+        }
+
+        public void RegisterAlias(
+            string aliasName,
+            string targetCommandData,
+            Action onSuccess = null
+            )
+        {
+            if (this.Commands.ContainsKey(aliasName))
+            {
+                return;
+            }
+
+            var alias = new Alias(aliasName, targetCommandData);
+            this.Add(alias, aliasName);
+            onSuccess?.Invoke();
         }
 
         public void Invoke(string data, IInteractor interactor)

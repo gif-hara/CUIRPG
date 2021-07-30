@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using HK.CUIRPG.Database;
 using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
