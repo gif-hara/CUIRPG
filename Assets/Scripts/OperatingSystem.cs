@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UniRx;
 using HK.CUIRPG.Commands;
+using HK.CUIRPG.Database;
 
 namespace HK.CUIRPG
 {
@@ -28,11 +29,28 @@ namespace HK.CUIRPG
 
         public static readonly ReactiveProperty<Window> CurrentWindow = new ReactiveProperty<Window>();
 
+        private CompositeDisposable m_Disposable = new CompositeDisposable();
+
         void Awake()
         {
             Instance = this;
 
             CurrentWindow.Value = this.desktop;
+
+            CommandManager.OnRegisteredAliasCommandAsObServable
+            .Subscribe(x =>
+            {
+                var userData = UserData.Instance;
+                userData.UserAliases.Add(new UserAlias
+                {
+                    aliasName = x.aliasName,
+                    commandData = x.commandData
+                });
+
+                userData.SendUpdateUserDataRequestAsObservable()
+                .Subscribe();
+            })
+            .AddTo(m_Disposable);
         }
 
         void Start()

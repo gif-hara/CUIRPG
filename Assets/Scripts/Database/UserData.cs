@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using PlayFab;
 using PlayFab.ClientModels;
 using PlayFab.Json;
+using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -55,11 +58,36 @@ namespace HK.CUIRPG.Database
             }
         }
 
+        public IObservable<Unit> SendUpdateUserDataRequestAsObservable()
+        {
+            return Observable.Create<Unit>(observer =>
+            {
+                var request = new UpdateUserDataRequest
+                {
+                    Data = ToRequest()
+                };
+                PlayFabClientAPI.UpdateUserData(
+                    request,
+                    result =>
+                    {
+                        observer.OnNext(Unit.Default);
+                        observer.OnCompleted();
+                    },
+                    error =>
+                    {
+                        observer.OnError(new Exception(error.GenerateErrorReport()));
+                    });
+
+                return Disposable.Empty;
+            });
+        }
+
         public Dictionary<string, string> ToRequest()
         {
             return new Dictionary<string, string>()
             {
-                { Key.Items, PlayFabSimpleJson.SerializeObject(UserItems) }
+                { Key.Items, PlayFabSimpleJson.SerializeObject(UserItems) },
+                { Key.Aliases, PlayFabSimpleJson.SerializeObject(UserAliases) }
             };
         }
 

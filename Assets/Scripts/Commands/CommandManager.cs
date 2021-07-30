@@ -16,6 +16,16 @@ namespace HK.CUIRPG.Commands
     {
         public readonly Dictionary<string, ICommand> Commands = new Dictionary<string, ICommand>();
 
+        public IObservable<RegisteredAliasCommand> OnRegisteredAliasCommandAsObServable => m_OnRegisteredAliasCommand;
+        private Subject<RegisteredAliasCommand> m_OnRegisteredAliasCommand = new Subject<RegisteredAliasCommand>();
+
+        public class RegisteredAliasCommand
+        {
+            public string aliasName;
+
+            public string commandData;
+        }
+
         public CommandManager()
         {
             this.Add(new Sleep());
@@ -38,12 +48,7 @@ namespace HK.CUIRPG.Commands
             this.Commands.Add(name, command);
         }
 
-        public void RegisterAlias(
-            string aliasName,
-            string targetCommandData,
-            IInteractor interactor,
-            Action onSuccess = null
-            )
+        public void RegisterAlias(string aliasName, string targetCommandData, IInteractor interactor)
         {
             if (this.Commands.ContainsKey(aliasName))
             {
@@ -53,15 +58,15 @@ namespace HK.CUIRPG.Commands
 
             var alias = new Alias(aliasName, targetCommandData);
             this.Add(alias, aliasName);
-            onSuccess?.Invoke();
             interactor.Send($"success register alias!");
+            m_OnRegisteredAliasCommand.OnNext(new RegisteredAliasCommand
+            {
+                aliasName = aliasName,
+                commandData = targetCommandData
+            });
         }
 
-        public void RegisterAlias(
-            string aliasName,
-            string targetCommandData,
-            Action onSuccess = null
-            )
+        public void RegisterAlias(string aliasName, string targetCommandData)
         {
             if (this.Commands.ContainsKey(aliasName))
             {
@@ -70,7 +75,20 @@ namespace HK.CUIRPG.Commands
 
             var alias = new Alias(aliasName, targetCommandData);
             this.Add(alias, aliasName);
-            onSuccess?.Invoke();
+            m_OnRegisteredAliasCommand.OnNext(new RegisteredAliasCommand
+            {
+                aliasName = aliasName,
+                commandData = targetCommandData
+            });
+        }
+
+        public void SetupAlias(List<UserAlias> userAliases)
+        {
+            foreach (var i in userAliases)
+            {
+                var alias = new Alias(i.aliasName, i.commandData);
+                this.Add(alias, i.aliasName);
+            }
         }
 
         public void Invoke(string data, IInteractor interactor)
