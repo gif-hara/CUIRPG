@@ -19,6 +19,9 @@ namespace HK.CUIRPG.Commands
         public IObservable<RegisteredAliasCommand> OnRegisteredAliasCommandAsObservable() => m_OnRegisteredAliasCommand;
         private Subject<RegisteredAliasCommand> m_OnRegisteredAliasCommand = new Subject<RegisteredAliasCommand>();
 
+        public IObservable<string> OnRemovedAliasCommandAsObservable() => m_OnRemovedAliasCommand;
+        private Subject<string> m_OnRemovedAliasCommand = new Subject<string>();
+
         public class RegisteredAliasCommand
         {
             public string aliasName;
@@ -46,6 +49,18 @@ namespace HK.CUIRPG.Commands
         public void Add(ICommand command, string name)
         {
             this.Commands.Add(name, command);
+        }
+
+        public bool Remove(string name)
+        {
+            var result = Commands.Remove(name);
+
+            if (result)
+            {
+                m_OnRemovedAliasCommand.OnNext(name);
+            }
+
+            return result;
         }
 
         public void RegisterAlias(string aliasName, string targetCommandData, IInteractor interactor)
