@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using HK.CUIRPG.Database;
 using UniRx;
 using UnityEngine;
@@ -31,7 +32,8 @@ namespace HK.CUIRPG.Commands
 
         public System.IObservable<Unit> InvokeAsObservable(CommandData data, IInteractor interactor)
         {
-            return OperatingSystem.Instance.CommandManager.InvokeAsObservable(this.CommandData, interactor);
+            var commandData = $"{CommandData} {string.Join(" ", data.Options)}";
+            return OperatingSystem.Instance.CommandManager.InvokeAsObservable(commandData, interactor);
         }
     }
 }
