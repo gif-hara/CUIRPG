@@ -52,6 +52,18 @@ namespace HK.CUIRPG
             })
             .AddTo(m_Disposable);
 
+            CommandManager.OnRemovedAliasCommandAsObservable()
+            .Subscribe(removedAliasName =>
+            {
+                var userData = UserData.Instance;
+                var userAlias = userData.UserAliases.Find(userAlias => userAlias.aliasName == removedAliasName);
+                userData.UserAliases.Remove(userAlias);
+
+                userData.SendUpdateUserDataRequestAsObservable()
+                .Subscribe();
+            })
+            .AddTo(m_Disposable);
+
             var userData = UserData.Instance;
             userData.SetuppedAsObservable()
             .Subscribe(_ =>
