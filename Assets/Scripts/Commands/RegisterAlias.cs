@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -23,13 +24,27 @@ namespace HK.CUIRPG.Commands
         {
             return Observable.Defer(() =>
             {
+                var commandManager = OperatingSystem.Instance.CommandManager;
+
+                if (data.ContainsOption("-l"))
+                {
+                    var aliasCommands = commandManager.Commands
+                    .Where(x => x.Value is Alias);
+                    foreach (var i in aliasCommands)
+                    {
+                        var alias = (Alias)i.Value;
+                        interactor.Send($"{alias.AliasName} {alias.CommandData}");
+                    }
+
+                    return Observable.ReturnUnit();
+                }
+
                 if (data.Options.Count < 2)
                 {
                     SendHelp(interactor);
                     return Observable.ReturnUnit();
                 }
 
-                var commandManager = OperatingSystem.Instance.CommandManager;
                 commandManager.RegisterAlias(data.Options[0], data.Options[1], interactor);
 
                 return Observable.ReturnUnit();

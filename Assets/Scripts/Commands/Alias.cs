@@ -13,25 +13,25 @@ namespace HK.CUIRPG.Commands
     {
         public string Name => "registered_alias";
 
-        private readonly string aliasName;
+        public readonly string AliasName;
 
-        private readonly string commandData;
+        public readonly string CommandData;
 
         public Alias(string aliasName, string commandData)
         {
-            this.aliasName = aliasName;
-            this.commandData = commandData;
+            this.AliasName = aliasName;
+            this.CommandData = commandData;
         }
 
         public void SendHelp(IInteractor interactor)
         {
             var help = OperatingSystem.Instance.LocalizedMessages.commandHelpBundle.Get(this.Name);
-            interactor.Send(help.Description.Format(this.aliasName, this.commandData));
+            interactor.Send(help.Description.Format(this.AliasName, this.CommandData));
         }
 
         public System.IObservable<Unit> InvokeAsObservable(CommandData data, IInteractor interactor)
         {
-            return OperatingSystem.Instance.CommandManager.InvokeAsObservable(this.commandData, interactor);
+            return OperatingSystem.Instance.CommandManager.InvokeAsObservable(this.CommandData, interactor);
         }
     }
 }
