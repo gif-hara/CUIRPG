@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using System;
+using UniRx;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -22,6 +23,11 @@ namespace HK.CUIRPG
         /// ユーザーが<see cref="IInteractor"/>へメッセージを送信する
         /// </summary>
         void Receive(string message);
+
+        /// <summary>
+        /// <see cref="IInteractor"/>がユーザーへ問いかけを行う
+        /// </summary>
+        IObservable<string> Confirm(string message);
 
         /// <summary>
         /// ユーザーとのやり取りを行えないようにする

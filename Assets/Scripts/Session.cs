@@ -24,6 +24,8 @@ namespace HK.CUIRPG
 
         private int busyCount = 0;
 
+        private Subject<string> m_ConfirmSubject = null;
+
         private readonly IReactiveProperty<bool> isInteractable = new ReactiveProperty<bool>(true);
 
         public IReadOnlyReactiveProperty<bool> IsInteractable => this.isInteractable;
@@ -60,15 +62,37 @@ namespace HK.CUIRPG
         public void Receive(string message)
         {
             this.EnqueueHistory(message);
-            if (!this.isInteractable.Value)
+
+            if (m_ConfirmSubject != null)
             {
-                this.buffer.Enqueue(message);
+                // Confirm中にさらにConfirmされることを考慮してnull代入を先に行っておく
+                var tempConfirmSubject = m_ConfirmSubject;
+                m_ConfirmSubject = null;
+
+                tempConfirmSubject.OnNext(message);
+                tempConfirmSubject.OnCompleted();
+                tempConfirmSubject = null;
             }
             else
             {
-                OperatingSystem.Instance.CommandManager.Invoke(message, this);
-                this.Broker.Publish(IInteractorEvents.Received.Get(new CommandData(message)));
+                if (!this.isInteractable.Value)
+                {
+                    this.buffer.Enqueue(message);
+                }
+                else
+                {
+                    OperatingSystem.Instance.CommandManager.Invoke(message, this);
+                    this.Broker.Publish(IInteractorEvents.Received.Get(new CommandData(message)));
+                }
             }
+        }
+
+        public IObservable<string> Confirm(string message)
+        {
+            Send(message);
+            m_ConfirmSubject = new Subject<string>();
+
+            return m_ConfirmSubject;
         }
 
         public void Accept()
