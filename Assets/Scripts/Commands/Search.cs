@@ -35,25 +35,11 @@ namespace HK.CUIRPG.Commands
                     titleItemId = Database.TitleData.Instance.Items[0].id
                 });
 
-                var request = new UpdateUserDataRequest
+                return userData.SendUpdateUserDataRequestAsObservable()
+                .Subscribe(_ =>
                 {
-                    Data = userData.ToRequest()
-                };
-                PlayFabClientAPI.UpdateUserData(
-                    request,
-                    result =>
-                    {
-                        interactor.Send("Search Complete!");
-                        observer.OnNext(Unit.Default);
-                        observer.OnCompleted();
-                    },
-                    error =>
-                    {
-                        interactor.Send(error.ErrorMessage);
-                        observer.OnError(new Exception(error.GenerateErrorReport()));
-                    });
-
-                return Disposable.Empty;
+                    interactor.Send("Search Complete!");
+                });
             });
         }
     }
