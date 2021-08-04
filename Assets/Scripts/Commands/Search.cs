@@ -24,7 +24,7 @@ namespace HK.CUIRPG.Commands
 
         public IObservable<Unit> InvokeAsObservable(CommandData data, IInteractor interactor)
         {
-            return Observable.Create<Unit>(observer =>
+            return Observable.Defer(() =>
             {
                 interactor.Send("Search...");
 
@@ -36,9 +36,10 @@ namespace HK.CUIRPG.Commands
                 });
 
                 return userData.SendUpdateUserDataRequestAsObservable()
-                .Subscribe(_ =>
+                .SelectMany(_ =>
                 {
                     interactor.Send("Search Complete!");
+                    return Observable.ReturnUnit();
                 });
             });
         }
