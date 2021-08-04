@@ -23,10 +23,21 @@ namespace HK.CUIRPG.Commands
         {
             return Observable.Defer(() =>
             {
-                var userData = UserData.Instance;
-                for (var i = 0; i < userData.UserItems.Count; i++)
+                if (data.Options.Count <= 0)
                 {
-                    interactor.Send($"[{i}] {userData.UserItems[i]}");
+                    SendHelp(interactor);
+                    return Observable.ReturnUnit();
+                }
+
+                if (data.ContainsOption("-l"))
+                {
+                    var userData = UserData.Instance;
+                    for (var i = 0; i < userData.UserItems.Count; i++)
+                    {
+                        interactor.Send($"[{i}] {userData.UserItems[i]}");
+                    }
+
+                    return Observable.ReturnUnit();
                 }
 
                 return Observable.ReturnUnit();
