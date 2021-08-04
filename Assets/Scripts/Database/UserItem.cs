@@ -11,6 +11,8 @@ namespace HK.CUIRPG.Database
     {
         public int titleItemId;
 
+        public TitleItem TitleItem => TitleData.Instance.Items.FirstOrDefault(x => x.id == titleItemId);
+
         public override string ToString()
         {
             var titleItem = TitleData.Instance.Items.FirstOrDefault(x => x.id == titleItemId);

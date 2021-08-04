@@ -40,6 +40,41 @@ namespace HK.CUIRPG.Commands
                     return Observable.ReturnUnit();
                 }
 
+                if (data.ContainsOption("-d"))
+                {
+                    var targetIndex = -1;
+                    if (data.TryGetInt("-d", out targetIndex))
+                    {
+                        var userData = UserData.Instance;
+                        if (targetIndex < 0 || userData.UserItems.Count <= targetIndex)
+                        {
+                            interactor.Send($"{targetIndex}は存在しません");
+                            return Observable.ReturnUnit();
+                        }
+                        else
+                        {
+                            var userItem = userData.UserItems[targetIndex];
+                            return interactor.Confirm($"{userItem.TitleItem.name}を削除します. よろしいですか？ y/n")
+                            .SelectMany(x =>
+                            {
+                                if (x == "y")
+                                {
+                                    userData.UserItems.Remove(userItem);
+                                    userData.SendUpdateUserDataRequestAsObservable()
+                                    .Subscribe();
+                                }
+
+                                return Observable.ReturnUnit();
+                            });
+                        }
+                    }
+                    else
+                    {
+                        SendHelp(interactor);
+                        return Observable.ReturnUnit();
+                    }
+                }
+
                 return Observable.ReturnUnit();
             });
         }
