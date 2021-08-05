@@ -28,14 +28,19 @@ namespace HK.CUIRPG.Database
 
         public IReadOnlyList<TitleField> Fields => m_Fields;
 
+        public IReadOnlyList<TitleAddableItemEffect> AddableItemEffects => m_AddableItemEffects;
+
         private List<TitleItem> m_Items = new List<TitleItem>();
 
         private List<TitleField> m_Fields = new List<TitleField>();
+
+        private List<TitleAddableItemEffect> m_AddableItemEffects = new List<TitleAddableItemEffect>();
 
         public void Setup(Dictionary<string, string> data)
         {
             m_Items = PlayFabSimpleJson.DeserializeObject<List<TitleItem>>(data["Items"]);
             m_Fields = PlayFabSimpleJson.DeserializeObject<List<TitleField>>(data["Fields"]);
+            m_AddableItemEffects = PlayFabSimpleJson.DeserializeObject<List<TitleAddableItemEffect>>(data["AddableItemEffects"]);
         }
     }
 }
