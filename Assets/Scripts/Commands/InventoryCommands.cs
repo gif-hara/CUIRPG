@@ -34,7 +34,15 @@ namespace HK.CUIRPG.Commands
                     var userData = UserData.Instance;
                     for (var i = 0; i < userData.UserItems.Count; i++)
                     {
-                        interactor.Send($"[{i}] {userData.UserItems[i]}");
+                        var item = userData.UserItems[i];
+                        interactor.Send($"[{i}] {item}");
+                        if (data.ContainsOption("detail"))
+                        {
+                            foreach (var e in item.effects)
+                            {
+                                interactor.Send($"    {e.Key}:{e.Value}");
+                            }
+                        }
                     }
 
                     return Observable.ReturnUnit();
