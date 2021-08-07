@@ -124,8 +124,11 @@ namespace HK.CUIRPG.Commands
         {
             return Observable.Defer(() =>
             {
+                interactor.Busy();
+
                 if (string.IsNullOrEmpty(data))
                 {
+                    interactor.Accept();
                     return Observable.ReturnUnit();
                 }
 
@@ -133,16 +136,17 @@ namespace HK.CUIRPG.Commands
 
                 if (!commandData.IsValid)
                 {
+                    interactor.Accept();
                     return Observable.ReturnUnit();
                 }
 
                 if (!this.Commands.ContainsKey(commandData.Name))
                 {
                     interactor.Send($"\"{commandData.Name}\" did not exist.");
+                    interactor.Accept();
                     return Observable.ReturnUnit();
                 }
 
-                interactor.Busy();
 
                 return this.Commands[commandData.Name].InvokeAsObservable(commandData, interactor)
                 .DoOnCompleted(() =>

@@ -24,9 +24,13 @@ namespace HK.CUIRPG
         [SerializeField]
         private TMP_InputField inputField = default;
 
-        private RectTransform historyTransform;
+        [SerializeField]
+        private RectTransform inputFieldRoot = default;
 
-        private RectTransform inputFieldTransform;
+        [SerializeField]
+        private TextMeshProUGUI leftPrompt = default;
+
+        private RectTransform historyTransform;
 
         private readonly StringBuilder historyBuilder = new StringBuilder();
 
@@ -39,7 +43,6 @@ namespace HK.CUIRPG
         void Start()
         {
             this.historyTransform = (RectTransform)this.history.transform;
-            this.inputFieldTransform = (RectTransform)this.inputField.transform;
             this.CalculateSize();
             this.inputField.onSubmit.AddListener(s =>
             {
@@ -52,9 +55,6 @@ namespace HK.CUIRPG
                     _this.inputField.text = "";
                 });
             });
-
-            this.owner = this.GetComponent<Window>();
-            Assert.IsNotNull(this.owner);
 
             this.owner.Broker.Receive<WindowEvents.Resize>()
                 .SubscribeWithState(this, (_, _this) => _this.CalculateSize())
@@ -132,7 +132,24 @@ namespace HK.CUIRPG
 
         public void Initialize(Session session)
         {
+            this.owner = this.GetComponent<Window>();
+            Assert.IsNotNull(this.owner);
+
             this.session = session;
+
+            this.session.IsInteractable
+            .TakeUntil(this.owner.Broker.Receive<WindowEvents.Removed>())
+            .Subscribe(x =>
+            {
+                if (x)
+                {
+                    this.leftPrompt.text = this.session.LeftPrompt;
+                }
+                else
+                {
+                    this.leftPrompt.text = "";
+                }
+            });
         }
 
         private void CalculateSize()
@@ -152,9 +169,9 @@ namespace HK.CUIRPG
                 sizeDelta.y = Mathf.Min(preferredHeight, maxHeight);
             }
             this.historyTransform.sizeDelta = sizeDelta;
-            var inputFieldRect = this.inputFieldTransform.rect;
+            var inputFieldRect = this.inputFieldRoot.rect;
             inputFieldRect.height = rootRect.height - sizeDelta.y;
-            this.inputFieldTransform.sizeDelta = new Vector2(sizeDelta.x, inputFieldRect.height);
+            this.inputFieldRoot.sizeDelta = new Vector2(sizeDelta.x, inputFieldRect.height);
         }
 
         private static int GetNewLineCount(string value)

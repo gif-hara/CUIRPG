@@ -36,7 +36,7 @@ namespace HK.CUIRPG.Commands
                     {
                         var item = userData.UserItems[i];
                         interactor.Send($"[{i}] {item}");
-                        if (data.ContainsOption("detail"))
+                        if (data.ContainsOption("detail") || data.ContainsOption("d"))
                         {
                             foreach (var e in item.effects)
                             {

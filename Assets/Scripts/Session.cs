@@ -30,11 +30,20 @@ namespace HK.CUIRPG
 
         public IReadOnlyReactiveProperty<bool> IsInteractable => this.isInteractable;
 
+        public string LeftPrompt => $"<color=yellow>{DateTime.Now.ToString("MM/dd HH:mm:ss")} > </color>";
+
+        private string m_CurrentLeftPromt;
+
         private const int HistoryLimit = 50;
 
         public override void Enter()
         {
             base.Enter();
+
+            IsInteractable
+                .TakeUntil(this.Broker.Receive<TaskEvents.Exit>())
+                .Subscribe(x => m_CurrentLeftPromt = LeftPrompt);
+
             this.Receive("login");
         }
 
@@ -61,7 +70,7 @@ namespace HK.CUIRPG
 
         public void Receive(string message)
         {
-            this.EnqueueHistory(message);
+            this.EnqueueHistory($"{m_CurrentLeftPromt}{message}");
 
             if (m_ConfirmSubject != null)
             {
