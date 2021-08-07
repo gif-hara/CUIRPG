@@ -8,7 +8,7 @@ namespace HK.CUIRPG.Database
     /// アイテムに付与出来るエフェクトのデータベース
     /// </summary>
     [Serializable]
-    public sealed class TitleAddableItemEffect
+    public sealed class TitleAddableItemEffect : IWeight
     {
         public int itemId;
 
@@ -17,5 +17,7 @@ namespace HK.CUIRPG.Database
         public int value;
 
         public int weight;
+
+        int IWeight.Weight => weight;
     }
 }

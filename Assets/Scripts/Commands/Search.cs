@@ -30,10 +30,7 @@ namespace HK.CUIRPG.Commands
 
                 var userData = UserData.Instance;
                 var items = userData.UserItems;
-                items.Add(new UserItem
-                {
-                    titleItemId = Database.TitleData.Instance.Items[0].id
-                });
+                items.Add(UserItem.New(Database.TitleData.Instance.Items[0].id));
 
                 return userData.SendUpdateUserDataRequestAsObservable()
                 .SelectMany(_ =>

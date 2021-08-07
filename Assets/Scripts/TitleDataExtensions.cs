@@ -14,7 +14,7 @@ namespace HK.CUIRPG
         /// <summary>
         /// <paramref name="titleItemId"/>に紐づく<see cref="TitleAddableItemEffect"/>を返す
         /// </summary>
-        public static Dictionary<string, List<TitleAddableItemEffect>> GetFromTitleItemId(IEnumerable<TitleAddableItemEffect> self, int titleItemId)
+        public static Dictionary<string, List<TitleAddableItemEffect>> GetFromTitleItemId(this IEnumerable<TitleAddableItemEffect> self, int titleItemId)
         {
             var result = new Dictionary<string, List<TitleAddableItemEffect>>();
 

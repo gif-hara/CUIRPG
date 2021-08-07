@@ -54,7 +54,7 @@ namespace HK.CUIRPG.Commands
                         else
                         {
                             var userItem = userData.UserItems[targetIndex];
-                            return interactor.Confirm($"{userItem.TitleItem.name}を削除します. よろしいですか？ y/n")
+                            return interactor.Confirm($"{userItem.GetTitleItem().name}を削除します. よろしいですか？ y/n")
                             .SelectMany(x =>
                             {
                                 if (x == "y")
