@@ -30,7 +30,7 @@ namespace HK.CUIRPG
 
         public IReadOnlyReactiveProperty<bool> IsInteractable => this.isInteractable;
 
-        public string LeftPrompt => $"<color=yellow>{DateTime.Now.ToString("MM/dd HH:mm:ss")} > </color>";
+        public string LeftPrompt => $"<color=yellow>{DateTime.Now.ToString("MM/dd HH:mm:ss")} ></color>";
 
         private string m_CurrentLeftPromt;
 
